@@ -4,7 +4,6 @@ from transformers import GenerationConfig, BitsAndBytesConfig
 import torch
 from messageformat import MessageFormat
 
-
 quantization_config = BitsAndBytesConfig(
     load_in_4bit=True,
 )
@@ -18,8 +17,7 @@ generation_config = GenerationConfig(
 
 @st.cache_resource
 def load_model():
-    model_id = "/mnt/f/llama3/huggingface/Meta-Llama-3-8B"
-
+    model_id = input("please iput model path:")
     tokenizer = AutoTokenizer.from_pretrained(model_id)
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
