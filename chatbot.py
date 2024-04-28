@@ -2,7 +2,7 @@ import streamlit as st
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from transformers import GenerationConfig, BitsAndBytesConfig
 import torch
-from chatformat import ChatFormat
+from messageformat import MessageFormat
 
 
 @st.cache_resource
@@ -41,7 +41,7 @@ def main():
         st.session_state.messages.append({"role": "user", "content": prompt})
         for message in st.session_state.messages:
             st.chat_message(message['role']).write(message['content'])
-        format_input = ChatFormat(tokenizer)
+        format_input = MessageFormat(tokenizer)
         input_messages = format_input.encode_dialog_prompt(st.session_state["messages"])
         input_tokens = torch.tensor(input_messages, dtype=torch.long, device="cuda").view(1,-1)
         generated_sequence = model.generate(
