@@ -4,10 +4,10 @@ class MessageFormat:
 
     def encode_header(self, message):
         tokens = []
-        tokens.extend(self.tokenizer.convert_tokens_to_ids(self.tokenizer.tokenize("<|start_header_id|>")))
+        tokens.extend(self.tokenizer.convert_tokens_to_ids("<|start_header_id|>"))
         print(tokens)
         tokens.extend(self.tokenizer.convert_tokens_to_ids(self.tokenizer.tokenize(message["role"])))
-        tokens.extend(self.tokenizer.convert_tokens_to_ids(self.tokenizer.tokenize("<|end_header_id|>")))
+        tokens.extend(self.tokenizer.convert_tokens_to_ids("<|end_header_id|>"))
         tokens.extend(self.tokenizer.convert_tokens_to_ids(self.tokenizer.tokenize("\n\n")))
         return tokens
 
@@ -16,14 +16,14 @@ class MessageFormat:
         tokens.extend(
             self.tokenizer.convert_tokens_to_ids(self.tokenizer.tokenize(message["content"].strip()))
         )
-        tokens.extend(self.tokenizer.convert_tokens_to_ids(self.tokenizer.tokenize("<|eot_id|>")))
+        tokens.extend(self.tokenizer.convert_tokens_to_ids("<|eot_id|>"))
         tokens.extend(self.tokenizer.convert_tokens_to_ids(self.tokenizer.tokenize("\n\n")))
         return tokens
 
     def encode_dialog_prompt(self, dialog):
         tokens = []
         tokens.extend(
-            self.tokenizer.convert_tokens_to_ids(self.tokenizer.tokenize("<|begin_of_text|>")))
+            self.tokenizer.convert_tokens_to_ids("<|begin_of_text|>"))
         for message in dialog:
             tokens.extend(self.encode_message(message))
         # Add the start of an assistant message for the model to complete.
